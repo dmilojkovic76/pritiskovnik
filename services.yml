@@ -1,0 +1,26 @@
+version: '3.1'
+
+services:
+  mongo-database:
+    image: 'docker.io/library/mongo'
+    restart: always
+    container_name: 'pritiskovnik-docker-container'
+    environment:
+      - MONGO_INITDB_DATABASE=pritiskovnik
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=toor
+    volumes:
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - ./mongo-volume:/data/db
+    ports:
+      - '27017-27019:27017-27019'
+  database-explorer:
+    image: 'docker.io/library/mongo-express'
+    restart: always
+    container_name: 'pritiskovnik-mongo-express-containeer'
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=toor
+      - ME_CONFIG_MONGODB_URL=mongodb://root:toor@mongo-database:27017/
+    ports:
+      - 8123:8081

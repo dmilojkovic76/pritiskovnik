@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Ignore the folder that holds mongo container data for development purposes
+mongo-volume
