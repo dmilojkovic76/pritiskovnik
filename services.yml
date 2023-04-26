@@ -3,7 +3,7 @@ version: '3.1'
 services:
   mongo-database:
     image: 'docker.io/library/mongo'
-    restart: always
+    restart: unless-stopped
     container_name: 'pritiskovnik-docker-container'
     environment:
       - MONGO_INITDB_DATABASE=pritiskovnik
@@ -14,9 +14,10 @@ services:
       - ./mongo-volume:/data/db
     ports:
       - '27017-27019:27017-27019'
-  database-explorer:
+
+  mongo-express:
     image: 'docker.io/library/mongo-express'
-    restart: always
+    restart: unless-stopped
     container_name: 'pritiskovnik-mongo-express-containeer'
     environment:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=root
